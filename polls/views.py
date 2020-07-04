@@ -1,10 +1,11 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, Http404, HttpResponseRedirect
+from django.http import HttpResponse, Http404, HttpResponseRedirect, JsonResponse
 from django.urls import reverse
-from django.views import generic
+from django.views import generic, View
 from django.utils import timezone
 
 from .models import Question, Choice
+from .forms import QuestionForm
 
 class IndexView(generic.ListView):
     template_name = "polls/index.html"
@@ -25,6 +26,24 @@ class DetailView(generic.DetailView):
 class ResultsView(generic.DetailView):
     model = Question
     template_name = "polls/results.html"
+
+class AjaxView(View):
+    """
+    Ajax post needs override get() and post()
+    """
+    form_class = QuestionForm
+    template_name = "polls/ajax.html"
+
+    def post(self, *args, **kwargs):
+        if self.request.method == "POST" and self.request.is_ajax():
+            form = self.form_class(self.request.POST)
+            form.save()
+            return JsonResponse({"success": True}, status=200)
+        return JsonResponse({"success": False}, status=404)
+
+    def get(self, *args, **kwargs):
+        form = self.form_class()
+        return render(self.request, self.template_name, {'form': form, 'ajax_url': reverse('polls:ajax')})
 
 # Create your views here.
 def index(request):

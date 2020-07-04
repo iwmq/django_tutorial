@@ -1,0 +1,27 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
+<script src="{% static 'polls/jquery-3.4.1.js' %}"></script>
+{% block content %}
+
+<h1>Ajax Test</h1>
+{{ url }}
+<form id="questionForm" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Save">
+</form>
+
+<script>
+    $(document).ready(function () {
+        $("#questionForm").on('submit', function (e) {
+            // Do not submit
+            e.preventDefault();
+
+            // Serialize data
+            var serializedData = $(this).serialize();
+
+            $.post("{{ ajax_url }}", serializedData);
+        });
+    });
+</script>
+{% endblock %}
