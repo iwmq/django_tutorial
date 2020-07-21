@@ -1,6 +1,9 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
   <HelloWorld msg="Hello Vue 3.0 + Vite" />
+  <div>
+    <a href="/polls/">Polls</a>
+  </div>
 </template>
 
 <script>
