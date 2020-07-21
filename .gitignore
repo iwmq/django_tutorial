@@ -1,5 +1,4 @@
 db.sqlite3
+**/static_root/**
 **/__pycache__/**
-**/vue3_app/dist/*
-**/vue3_app/node_modules/*
 **/.pyc
