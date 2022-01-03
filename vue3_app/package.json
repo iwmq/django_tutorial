@@ -1,19 +1,19 @@
 {
   "name": "vue3_app",
   "description": "My front end app using Vue 3",
-  "version": "0.0.0",
-  "repository": "github.com/jaywang/django3_demo",
+  "version": "0.0.1",
+  "repository": "github.com/jaywang/django_tutorial",
   "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "vite build"
   },
   "dependencies": {
-    "postcss": "^8.2.15",
-    "vue": "^3.0.11"
+    "postcss": "^8.4.5",
+    "vue": "^3.2.26"
   },
   "devDependencies": {
-    "@vue/compiler-sfc": "^3.0.11",
-    "vite": "^2.2.4"
+    "@vue/compiler-sfc": "^3.2.26",
+    "vite": "^2.7.10"
   }
 }
