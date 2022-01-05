@@ -35,13 +35,16 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'polls.apps.PollsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'channels',
+
+    'polls',
+    'chat',
 ]
 
 MIDDLEWARE = [
@@ -77,6 +80,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'django_tutorial.wsgi.application'
 
+# Channels
+ASGI_APPLICATION = 'django_tutorial.asgi.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases

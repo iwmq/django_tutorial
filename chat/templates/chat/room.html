@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}<title>Chat Room</title>{% endblock %}
+
+{% block extra_css %}
+<style>
+    #chat-log {
+        height: 40vh;
+        border: 1px solid seagreen;
+        overflow: auto;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col">
+        <h2>Chat Room</h2>
+    </div>
+</div>
+<div class="row" id="app">
+    <div class="col">
+        <div id="chat-log">
+            <p v-for="m in chat_log">
+                [m.received_at]: [m.message]
+            </p>
+        </div>
+        <div class="form-group my-3">
+            <input type="text" id="chat-message-input" class="form-control"
+                v-model="message" v-on:keyup="keyup_cb($event)">
+        </div>
+        <div class="form-group my-3">
+            <button id="chat-message-submit" class="btn btn-primary"
+                v-on:click="submit_cb">
+                Send
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    const ChatRoom = {
+        delimiters: ["[", "]"],
+        data() {
+            return {
+                room_name: "{{ room_name }}",
+                message: "",
+                chat_log: [],
+                ws: null
+            };
+        },
+        mounted() {
+            this.create_ws();
+            document.getElementById("chat-message-input").focus();
+        },
+        methods: {
+            create_ws() {
+                const that = this;
+                this.ws = new WebSocket(
+                    "ws://" + window.location.host + "/ws/chat/" + this.room_name + "/"
+                );
+                this.ws.onopen = e => {
+                    console.log("Websocket connected!");
+                };
+                this.ws.onmessage = e => {
+                    const data = JSON.parse(e.data);
+                    that.chat_log.push({
+                        received_at: new Date(),
+                        message: data.message
+                    })
+                };
+                this.ws.onclose = e => {
+                    console.log("Websocket disconnected!");
+                    that.ws = null;
+                    that.create_ws();
+                };
+            },
+            send_message() {
+                this.ws.send(JSON.stringify({
+                    'message': this.message
+                }));
+                this.message = "";
+            },
+            submit_cb() {
+                this.send_message();
+            },
+            keyup_cb(e) {
+                if (e.keyCode === 13) { // enter, return
+                    this.send_message();
+                }
+            }
+        }
+    };
+
+    Vue.createApp(ChatRoom).mount("#app");
+</script>
+{% endblock %}
