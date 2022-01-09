@@ -11,9 +11,10 @@ class ChatTests(ChannelsLiveServerTestCase):
     def setUpClass(cls):
         super().setUpClass()
         try:
-            # NOTE: Requires "geckodriver" binary to be installed in $PATH
             # See https://www.selenium.dev/documentation/en/webdriver/driver_requirements/
-            cls.driver = webdriver.Firefox()
+            # NOTE: Fixfox Driver (geckodriver) is buggy, so use Chrome driver
+            # Chrome driver: https://sites.google.com/chromium.org/driver/
+            cls.driver = webdriver.Chrome()
         except:
             super().tearDownClass()
             raise
