@@ -16,10 +16,30 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
+from django.conf.urls.static import static
+from django.conf import settings
+
+from filebrowser.sites import site as filebrowser_site
+
+filebrowser_site.directory = "uploads/"
+# For development
+filebrowser_patterns = static(
+    settings.FILEBROWSER_URL,
+    document_root=settings.FILEBROWSER_DIRECTORY
+)
+filebrowser_versions_patterns = static(
+    settings.FILEBROWSER_VERSIONS_URL,
+    document_root=settings.FILEBROWSER_VERSIONS_BASEDIR
+)
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name="index.html")),
     path('chat/', include("chat.urls")),
     path('polls/', include('polls.urls')),
+
+    # the following two are for file browser, must come before /admin
+    path('admin/filebrowser/', filebrowser_site.urls),
+    path('grappelli/', include('grappelli.urls')),
+
     path('admin/', admin.site.urls),
-]
+] + filebrowser_patterns + filebrowser_versions_patterns

@@ -4,3 +4,5 @@ db.sqlite3
 **/.pyc
 .vscode
 geckodriver.log
+uploads/
+_versions/

@@ -6,3 +6,7 @@ tzdata==2021.5
 channels==3.0.4
 channels-redis==3.3.0
 selenium==4.1.0
+
+django-filebrowser==4.0.1
+django-grappelli==3.0.1
+pillow==9.0.0

@@ -35,6 +35,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # The following two must come before admin to override it
+    'grappelli',
+    'filebrowser',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -158,3 +162,9 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static_root")
+
+# For file browser
+FILEBROWSER_URL = "/uploads/"
+FILEBROWSER_DIRECTORY = "uploads"
+FILEBROWSER_VERSIONS_URL = "/_versions/"
+FILEBROWSER_VERSIONS_BASEDIR = "_versions"
