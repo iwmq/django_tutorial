@@ -10,3 +10,6 @@ selenium==4.1.0
 django-filebrowser==4.0.1
 django-grappelli==3.0.1
 pillow==9.0.0
+
+celery==5.2.3
+redis==4.1.1

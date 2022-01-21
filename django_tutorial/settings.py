@@ -49,6 +49,7 @@ INSTALLED_APPS = [
 
     'polls',
     'chat',
+    'celery_tasks',
 ]
 
 MIDDLEWARE = [
