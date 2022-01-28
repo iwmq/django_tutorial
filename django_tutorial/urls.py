@@ -34,6 +34,10 @@ filebrowser_versions_patterns = static(
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name="index.html")),
+
+    # async views
+    path('hello_async/', include("hello_async.urls")),
+
     path('chat/', include("chat.urls")),
     path('polls/', include('polls.urls')),
 
